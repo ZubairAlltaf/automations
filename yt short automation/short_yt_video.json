@@ -1,0 +1,1110 @@
+{
+  "name": "long yt video",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -760,
+        480
+      ],
+      "id": "f89372e4-69ca-4349-b7a5-3ff644df141a",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1DL1pkllGIc6rushUOdfHGHS_Q7d91PyxSofUoLE5FH8",
+          "mode": "list",
+          "cachedResultName": "yt videos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DL1pkllGIc6rushUOdfHGHS_Q7d91PyxSofUoLE5FH8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DL1pkllGIc6rushUOdfHGHS_Q7d91PyxSofUoLE5FH8/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "production",
+              "lookupValue": "for production"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -640,
+        480
+      ],
+      "id": "d5a3cdaf-8ab0-4056-8935-ad7eeaa5f5c4",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vZs1RMpT6VbK4GbO",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.idea }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Your outputs NEVER include double-quotes. \n\nYou are an advanced prompt-generation AI specializing in crafting highly detailed and hyper-realistic POV (point of view) image prompt ideas. Your task is to generate concise, action-driven, immersive prompt ideas that follow a sequential narrative, depicting a \"day in the life\" experience based on a given video topic. \n\nYou can skip the part on waking up from bed.\nDon't output actions related to wearing clothing.\nDon't output actions related to using feet.\nYou also prioritize more sensational and unique scenes for that given scenario, instead of common things people do generally\n\nGuidelines:\nEvery output represents a first-person perspective, making the viewer feel like they are experiencing the moment.\nUse action-based verbs like gripping, running, reaching, holding, walking toward, stumbling, climbing, lifting, turning, stepping into.\nUse keywords such as POV, GoPro-style, first-person view, point of view to reinforce immersion.\nKeep all outputs between 5 to 10 words long.\nNever use double quotes in any output.\nAll scenes must be hyper-realistic, high quality, and cinematic, evoking strong visual and emotional impact.\nEach set of prompts must follow a logical sequence, covering a full day in the life from morning to night, ensuring narrative continuity.\n\nAvoid introspection or vague descriptions—focus on physical actions and interactions that build a cohesive, immersive story.\n\nExamples:\nTopic: A Peasant’s Day in Medieval Europe\nPushing open a wooden cottage door\nScooping water from a village well\nKneeling to tie worn leather shoes\nWalking through a bustling market square\nHanding a silver coin to a merchant\nCarrying a sack of wheat up a hill\nHammering nails into a wooden fence\nStirring stew over a crackling fire\nPlacing a candle by the bedside\nTopic: A Cyberpunk Mercenary’s Routine\nWaking up to flickering neon ceiling lights\nPushing aside tangled wires on a desk\nScanning a wrist implant for mission updates\nLoading a plasma pistol in a dim alley\nStepping onto a hover bike in the rain\nSwiping a keycard through a vault scanner\nDucking behind cover as drones patrol ahead\nHacking a neon-lit terminal with gloved fingers\nCollapsing onto a metal cot in exhaustion\nTopic: A Soldier’s Day in World War I\nWiping dirt from a battered helmet\nClimbing out of a damp trench at dawn\nHolding a rusted rifle with trembling hands\nWalking through thick fog past barbed wire\nRushing toward an enemy bunker under fire\nReloading behind sandbags as shells explode\nBandaging a soldier’s wound with torn cloth\nLighting a cigarette under a moonlit sky\nResting against a wooden crate in the trenches\n\nEach generated sequence tells a visual story, pulling the viewer into a cohesive first-person experience from start to finish."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        -520,
+        480
+      ],
+      "id": "0dbe7b59-d042-406c-94cf-cabfc98abe51",
+      "name": "Generate Titles"
+    },
+    {
+      "parameters": {
+        "options": {
+          "numberOfItems": 5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserItemList",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        620
+      ],
+      "id": "7d704252-7bd2-48c9-83e0-714ce16d2ac3",
+      "name": "Item List Output Parser"
+    },
+    {
+      "parameters": {
+        "content": "## INPUT: Video topic",
+        "height": 340,
+        "width": 660,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -840,
+        420
+      ],
+      "id": "94409694-63ee-4a83-8f48-f74406f9094a",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## | Generate Prompts\n",
+        "height": 220,
+        "width": 540,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        60
+      ],
+      "id": "a48eaa55-4210-4641-a93f-40734c85ced6",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## | Generate Images\n",
+        "height": 220,
+        "width": 540,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        300
+      ],
+      "id": "b07706c9-2859-46bb-902f-3ef2b1b0db66",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.piapi.ai/api/v1/task",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "your api key"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n    \"model\": \"Qubico/flux1-dev\",\n    \"task_type\": \"txt2img\",\n    \"input\": {\n        \"prompt\": \"{{ $json.output }}\",\n        \"width\": 540,\n        \"height\": 960\n    }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -60,
+        380
+      ],
+      "id": "0ae90d5d-3e45-4d2d-8edd-5a3a0bacbba6",
+      "name": "Text-to-Image"
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        140,
+        380
+      ],
+      "id": "9340c34f-c2bf-411b-ae0a-ba43af12e627",
+      "name": "Wait",
+      "webhookId": "f594e7ce-50a4-4798-9320-0f45d725d678"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.piapi.ai/api/v1/task/{{ $json.data.task_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "your api key"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        300,
+        380
+      ],
+      "id": "8d44a6c2-8365-40b7-aacc-e62080682ecb",
+      "name": "Get Image"
+    },
+    {
+      "parameters": {
+        "content": "## | Generate Videos\n",
+        "height": 220,
+        "width": 540,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        540
+      ],
+      "id": "46b2f1f1-9470-4f59-a834-364fca3b1bf8",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.piapi.ai/api/v1/task",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "your img to video api key"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n    \"model\": \"kling\",\n    \"mode\": \"pro\",\n    \"task_type\": \"video_generation\",\n    \"input\": {\n        \"prompt\": \"{{ $json.data.input.prompt }}\",\n        \"negative_prompt\": \"bad quality\",\n        \"cfg_scale\": 0.65,\n        \"duration\": 5,\n        \"image_url\": \"{{ $json.data.output.image_url }}\",\n        \"camera_control\": {\n            \"type\": \"simple\",\n            \"config\": {\n                \"horizontal\": 0,\n                \"vertical\": 0,\n                \"pan\": 0,\n                \"tilt\": 0,\n                \"roll\": 0,\n                \"zoom\": 0\n            }\n        }\n    },\n    \"config\": {}\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -60,
+        600
+      ],
+      "id": "1a9ecfd3-31ea-4425-9c1f-46e02c46ef13",
+      "name": "Image-to-Video"
+    },
+    {
+      "parameters": {
+        "amount": 10,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        120,
+        600
+      ],
+      "id": "b049b723-34e0-4867-8878-24f4598840ff",
+      "name": "Wait1",
+      "webhookId": "5de76fb5-1a00-4f7e-a4ed-121d9a5e3bac"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.piapi.ai/api/v1/task/{{ $json.data.task_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-API-Key",
+              "value": "your image to video api key"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        300,
+        600
+      ],
+      "id": "997e54cc-977e-4dc7-94bb-fee85f9aeebb",
+      "name": "Get Video"
+    },
+    {
+      "parameters": {
+        "content": "## | Generate Sounds\n",
+        "height": 220,
+        "width": 540,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        780
+      ],
+      "id": "5f9b9d56-3013-4b90-9f55-cea14cf70b16",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.elevenlabs.io/v1/sound-generation",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "xi-api-key",
+              "value": "your-api-key-here"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"text\": \"ambient musical background sounds for this person: {{ $('Google Sheets').first().json.idea }}, the action is: {{ $('Generate Titles').item.json.response.text }}\",\n  \"duration_seconds\": 5,\n  \"prompt_influence\": 0.75\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -60,
+        860
+      ],
+      "id": "d22ae790-8cda-4c24-938d-b910589e8c7f",
+      "name": "Text-to-Sound"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "name": "={{ $json.data.task_id }}.mp3",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "14ZB0SorqkuR7PO7X3MhEkF0NJnKGp1sQ",
+          "mode": "list",
+          "cachedResultName": "R24",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/14ZB0SorqkuR7PO7X3MhEkF0NJnKGp1sQ"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        100,
+        860
+      ],
+      "id": "52749a03-1b06-49a3-adec-f007dba3df5b",
+      "name": "Upload MP3",
+      "credentials": {
+        "googleApi": {
+          "id": "Z4m5bxvcVUNhoVeA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "share",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "writer",
+            "type": "anyone",
+            "allowFileDiscovery": true
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        340,
+        860
+      ],
+      "id": "917368f5-28fc-4f3b-b79c-d8ab3c31855f",
+      "name": "Update Access",
+      "credentials": {
+        "googleApi": {
+          "id": "Z4m5bxvcVUNhoVeA",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## OUTPUT: Final Video\n",
+        "height": 340,
+        "width": 660,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        480,
+        420
+      ],
+      "id": "c2900f37-a761-48a2-b513-2cd060e4597e",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 4,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        760,
+        500
+      ],
+      "id": "8ab2a29f-1552-4ce5-bb3c-4ba47d5c2472",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    scene_titles: items.map(item => item.json.response.text),\n    video_urls: items.map(item => item.json.data.output.video_url),\n    sound_urls: items.map(item => item.json.webContentLink)\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        900,
+        520
+      ],
+      "id": "49b6a686-3e21-415e-ace2-c43c4817cd85",
+      "name": "List Elements"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.creatomate.com/v1/renders",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer your-api-key-here"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={\n  \"template_id\": \"5aafffa3-6adc-4a2f-90dc-c91a80d2136a\",\n  \"modifications\": {\n    \"Audio-1.source\": \"{{ $json.sound_urls[0] }}\",\n    \"Audio-2.source\": \"{{ $json.sound_urls[1] }}\",\n    \"Audio-3.source\": \"{{ $json.sound_urls[2] }}\",\n    \"Audio-4.source\": \"{{ $json.sound_urls[3] }}\",\n    \"Audio-5.source\": \"{{ $json.sound_urls[4] }}\",\n    \n    \"Video-1.source\": \"{{ $json.video_urls[0] }}\",\n    \"Video-2.source\": \"{{ $json.video_urls[1] }}\",\n    \"Video-3.source\": \"{{ $json.video_urls[2] }}\",\n    \"Video-4.source\": \"{{ $json.video_urls[3] }}\",\n    \"Video-5.source\": \"{{ $json.video_urls[4] }}\",\n    \n    \"Text-1.text\": \"{{ $('Google Sheets').first().json.idea }}\",\n    \"Text-2.text\": \"{{ $json.scene_titles[1] }}\",\n    \"Text-3.text\": \"{{ $json.scene_titles[2] }}\",\n    \"Text-4.text\": \"{{ $json.scene_titles[3] }}\",\n    \"Text-5.text\": \"{{ $json.scene_titles[4] }}\"\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1020,
+        520
+      ],
+      "id": "3fd551e6-2cd8-4d74-9bd3-ee820373fdc9",
+      "name": "Render Video",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1-Pg0atARGiLZMUmc9rT7xpCxhPesYzYmcGGyp4aYbcE",
+          "mode": "list",
+          "cachedResultName": "R24 | Faceless POV Video AI Agent",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-Pg0atARGiLZMUmc9rT7xpCxhPesYzYmcGGyp4aYbcE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-Pg0atARGiLZMUmc9rT7xpCxhPesYzYmcGGyp4aYbcE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Google Sheets').first().json.id }}",
+            "production": "done",
+            "publishing": "for publishing",
+            "final_output": "={{ $json.url }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "idea",
+              "displayName": "idea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "caption",
+              "displayName": "caption",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "production",
+              "displayName": "production",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "environment_prompt",
+              "displayName": "environment_prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "publishing",
+              "displayName": "publishing",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "final_output",
+              "displayName": "final_output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1160,
+        520
+      ],
+      "id": "8c594221-6161-475f-9b5a-b6e858a5adeb",
+      "name": "Final Video Link",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vZs1RMpT6VbK4GbO",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        1420,
+        520
+      ],
+      "id": "a8635966-b943-4cea-a5fb-b77870b56c32",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "={{ $json.idea }}",
+        "regionCode": "US",
+        "categoryId": "1",
+        "options": {
+          "description": "={{ $json.caption }}",
+          "privacyStatus": "unlisted"
+        }
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        520
+      ],
+      "id": "a6b9fc1d-2bbc-428c-ad4c-d684430a922f",
+      "name": "YouTube",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "bWSnaX90ZH6wjPAg",
+          "name": "YouTube account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## PUBLISHING AGENT\n",
+        "height": 340,
+        "width": 600,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        420
+      ],
+      "id": "4a60d0f3-2c8a-4120-b229-e36e0b1f2fc7",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 940,
+        "width": 150,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        60
+      ],
+      "id": "8bf8ab11-72f7-453e-9f0f-fe3315af8cab",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1DL1pkllGIc6rushUOdfHGHS_Q7d91PyxSofUoLE5FH8",
+          "mode": "list",
+          "cachedResultName": "yt videos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DL1pkllGIc6rushUOdfHGHS_Q7d91PyxSofUoLE5FH8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1DL1pkllGIc6rushUOdfHGHS_Q7d91PyxSofUoLE5FH8/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "publishing",
+              "lookupValue": "for publishing"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1560,
+        520
+      ],
+      "id": "14299f7f-5f0b-4669-941f-88f051ea28b6",
+      "name": "Get Video Link",
+      "executeOnce": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "vZs1RMpT6VbK4GbO",
+          "name": "Google Sheets account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.final_output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1700,
+        520
+      ],
+      "id": "ea8d6fa0-cfa6-4c73-91e9-5452b47cbac4",
+      "name": "Get Video FIle"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        660
+      ],
+      "id": "aebcc278-adcf-437f-8ea9-48e8fdea9e9e",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nwHL1y1Eyssthrdi",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an advanced prompt-generation AI specializing in expanding short POV (point-of-view) image prompt ideas into detailed, hyper-realistic prompts optimized for image-generation models like Flux and MidJourney. Your task is to take a brief input and transform it into a rich, cinematic, immersive prompt that strictly adheres to a first-person perspective, making the viewer feel as if they are physically present in the scene.\n\nThis is the overall idea for the video: {{ $('Google Sheets').first().json.idea }}\nThis is the short prompt idea you need to expand upon: {{ $json.response.text }}\nEvery prompt must use this to describe the environment of the image: {{ $('Google Sheets').first().json.environment_prompt }}\n\nEvery prompt has three sections:\n1/ You always start the prompt with: {{ $('Google Sheets').item.json.idea }}\n2/ In the foreground, show and describe the hands, limbs, or feet of the viewer. this section must start with \"First person view POV GoPro shot of [relevant limb]...\"\n3/ In the background, describe the scenery. must start with \"In the background, [describe scenery]\"\n\nMost Important Guidelines:\nEvery image must be a first-person perspective shot—the viewer must feel like they are experiencing the moment themselves, not just observing it.\nA visible limb (hands or feet) must always be present and actively engaged in the environment—whether gripping, reaching, pushing, lifting, or interacting in a natural way.\nThe framing must be dynamic and interactive, mimicking real-world human vision—ensuring motion, depth, and immersion similar to a GoPro or head-mounted camera shot.\nOther Key Guidelines:\nFull-body awareness: The prompt should subtly remind the viewer that they have a physical presence—mentioning sensations like weight shifting, breath fogging in the cold, or fingers trembling from adrenaline.\nSensory depth: The prompt should engage multiple senses (sight, touch, temperature, sound, even smell) to heighten realism.\nWorld interaction: The hands or feet should not just be present but actively interacting with the scene (e.g., clutching, adjusting, stepping forward, brushing against surfaces).\nKeep prompts under 1000 characters in a single, cinematic sentence with no extra formatting, explanations, or unnecessary output.\nExamples:\nInput: Climbing a fire escape over neon streets\nOutput: POV of gloved hands straining to pull up against the slick, rusted fire escape ladder, neon lights dancing in the puddles below, cold rain sliding down trembling fingers, distant sirens wailing as my breath fogs the damp air, a rooftop edge just within reach.\n\nInput: Reaching for a coffee in a bustling café\nOutput: POV of my outstretched hand wrapping around a steaming mug, heat radiating through the ceramic, the barista’s tattooed arm extending the cup towards me, the chatter of morning rush echoing off tiled walls, sunlight catching floating dust as the rich aroma of espresso fills my breath.\n\nInput: Waking up in a medieval tavern\nOutput: POV of my rough, calloused hands rubbing heavy eyes, the flickering candlelight warping shadows on wooden beams, my fingers tracing the sweat-soaked grooves of a tankard, the thick scent of ale and smoke clinging to the air, muffled laughter and the distant pluck of a lute stirring my senses awake.\n",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        -60,
+        120
+      ],
+      "id": "5d72a4c5-60f0-4963-8d3f-40824928be0b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        180
+      ],
+      "id": "c0d2efd2-4bc6-4a25-bf00-5ebf85576360",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nwHL1y1Eyssthrdi",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 📌 n8n AI Media Workflow Guide  \n**Double-click to edit. [Docs](https://docs.n8n.io/workflows/sticky-notes/)**  \n\n### ✅ Setup Instructions:  \n1. **🔑 PIAPI Credentials**  \n   - Use the **free trial** from [PIAPI.ai](https://piapi.ai), but it's **recommended to add credits** for stable production use.  \n   - Use `Qubico/flux1-dev` model for **text-to-image** generation.\n\n2. **🖼️ Image Generation**  \n   - API used: `POST https://api.piapi.ai/api/v1/task`  \n   - Check task status using `GET` with `task_id`.  \n   - If output is delayed or pending, increase timeout or check **task history** in PIAPI dashboard.\n\n3. **🎞️ Image to Video & 🗣️ Voice Generation**  \n   - Use **Kling model** via PIAPI for **image-to-video** generation.  \n   - Also use PIAPI for **voice generation**. Same API key works.\n\n4. **📊 Google Sheets Integration**  \n   - Setup **Google credentials** inside n8n.  \n   - Make sure **Google Sheets API** is enabled in [Google Cloud Console](https://console.cloud.google.com/).\n\n5. **▶️ YouTube API Setup**  \n   - Go to Google Cloud Console and enable **YouTube Data API v3**.  \n   - Use your Client ID and Secret for connection in n8n.  \n   - For guidance, ask **Gemini** or **ChatGPT**.\n\n---\n\n### 💡 Tips  \n- Adjust timing/wait if image generation is slow.  \n- Monitor task status under PIAPI dashboard.  \n- All prompts and model versions are customizable.\n\n---\n\n👨‍💻 **Made by:** Zubair Alltaf  \n🔗 [GitHub](https://github.com/ZubairAlltaf)\n",
+        "height": 880,
+        "width": 600
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -780,
+        -460
+      ],
+      "id": "6fde09c5-6715-44bc-80ca-e6dcf75fd83b",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## 📋 Google Sheets Format Guide  \nTo avoid any errors in your automation, make sure your **Google Sheet** is structured correctly.\n\n🛠️ **Required Sheet Format:**  \n- Proper column headers (no blank titles)  \n- Clean rows of data (no merged cells)  \n- Avoid empty first rows or columns  \n- Consistent data types under each header\n\n🔗 **Example Sheet Template:**  \n[Click here to view](https://docs.google.com/spreadsheets/d/1DL1pkllGIc6rushUOdfHGHS_Q7d91PyxSofUoLE5FH8/edit?usp=sharing)\n\n✅ You can **make a copy** of the template and modify it as needed for your workflow.\n\n---\n\n📎 Pro Tip:  \nMake sure the Google Sheet is **shared with your service account** (if using OAuth) and **permissions are set to Editor**.\n\n🛡️ This helps prevent unexpected read/write errors during automation.\n\n---\n\n👨‍💻 By: Zubair Alltaf  \n🔗 [GitHub](https://github.com/ZubairAlltaf)\n",
+        "height": 680,
+        "width": 780
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        -400
+      ],
+      "id": "d149202c-5152-4c6e-a240-ba20448bc8bd",
+      "name": "Sticky Note5"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Generate Titles",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item List Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate Titles",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Titles": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text-to-Image": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Get Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image": {
+      "main": [
+        [
+          {
+            "node": "Image-to-Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Image-to-Video": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Get Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video": {
+      "main": [
+        [
+          {
+            "node": "Text-to-Sound",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Text-to-Sound": {
+      "main": [
+        [
+          {
+            "node": "Upload MP3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload MP3": {
+      "main": [
+        [
+          {
+            "node": "Update Access",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Update Access": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "List Elements",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "List Elements": {
+      "main": [
+        [
+          {
+            "node": "Render Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Render Video": {
+      "main": [
+        [
+          {
+            "node": "Final Video Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Get Video Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video Link": {
+      "main": [
+        [
+          {
+            "node": "Get Video FIle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video FIle": {
+      "main": [
+        [
+          {
+            "node": "YouTube",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate Titles",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Text-to-Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5016a145-c975-476f-a742-bb0bce4d3dc7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a2d7f160e5083c7d135c088a00a4dd2fd6799272b651ddee67ff152d94827035"
+  },
+  "id": "fFi4yxvfGXSlAhh1",
+  "tags": [
+    {
+      "createdAt": "2025-06-14T17:56:32.449Z",
+      "updatedAt": "2025-06-14T17:56:32.449Z",
+      "id": "Qn6mEgYG6gXDTjwe",
+      "name": "operationeel"
+    },
+    {
+      "createdAt": "2025-06-14T17:56:32.492Z",
+      "updatedAt": "2025-06-14T17:56:32.492Z",
+      "id": "RjDnxbnMqb3GtpYU",
+      "name": "longform"
+    }
+  ]
+}
