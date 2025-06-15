@@ -1,0 +1,407 @@
+{
+  "name": "gmail assistant badboy",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -400,
+        -80
+      ],
+      "id": "d71c94a7-697d-4572-bd55-f8b0011388ab",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m2znOemsg1mgMMuH",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.snippet }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "users of app ",
+              "description": "when any email come with the text inside i am user of ur application  or customer is asking forhis experience with our app , need to separate this"
+            },
+            {
+              "category": "clients ",
+              "description": "when any email comes with containing words we need ur services , or the customer is asking for getting my services or talking about any of his project, need to separate this "
+            },
+            {
+              "category": "inquiry ",
+              "description": "all other emails will get transfered in this category "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -60
+      ],
+      "id": "4ab4e424-8930-4455-a696-e0322387a509",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro-preview-05-06",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        100
+      ],
+      "id": "4b859d3d-c662-4e7d-bedc-4163e0a1c2ad",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nwHL1y1Eyssthrdi",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        160,
+        160
+      ],
+      "id": "31dece91-ded0-4f9e-8bff-e88b26973427",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nwHL1y1Eyssthrdi",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You will work as my personal Gmail assistant. You need to reply to this email and make sure that my name is zubair if needed to use then use it other wise ignore here is the email whose reply u need to generate :\n{{ $json.snippet }}\n",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a polite, professional email assistant. Your task is to reply to incoming emails based on their content."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        380,
+        120
+      ],
+      "id": "72b3a50f-f7d8-457f-a882-cb3a4f0e86f3",
+      "name": "Basic LLM Chain1"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "=thanks for contacting us ",
+        "message": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        960,
+        120
+      ],
+      "id": "ec2ababb-f204-413a-a5e4-8b42576bb037",
+      "name": "Gmail1",
+      "webhookId": "11be71ac-4970-4e0c-8c03-84c61bd96651",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m2znOemsg1mgMMuH",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You will work as my personal Gmail assistant and make sure my name is zubair if needed then use it other wise dont use it and we provide the services of flutter app development , personal portfolio website and automation services . You need to reply to this email:\n{{ $('Gmail Trigger').item.json.snippet }}\n",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a polite, professional email assistant. Your task is to reply to incoming emails based on their content."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        540,
+        -80
+      ],
+      "id": "f1491ede-8986-4451-ab41-8a638c68ee3e",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        300,
+        -120
+      ],
+      "id": "6a4b478e-01ef-4b5d-b91d-3e2d7ff35183",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nwHL1y1Eyssthrdi",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "Thanks for contacting ",
+        "message": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        920,
+        -60
+      ],
+      "id": "3966b736-ef4f-4163-bf99-75efb58f34b8",
+      "name": "Gmail",
+      "webhookId": "31b67289-7d47-422b-a123-ce9943ea697c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m2znOemsg1mgMMuH",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You will work as my personal Gmail assistant and make sure my name is zubair if needed then use it other wise dont use it and our app is a trading signals provider app where we users post thier signals and get info about likes followers etc. You need to reply to this email:\n{{ $json.snippet }}\n",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a polite, professional email assistant. Your task is to reply to incoming emails based on their content."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [
+        300,
+        -380
+      ],
+      "id": "43bdeeae-9182-4762-a6cc-096035088218",
+      "name": "Basic LLM Chain3"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        480,
+        -240
+      ],
+      "id": "7ee23e56-62e7-4a49-9dd4-ecde6dee6b27",
+      "name": "Google Gemini Chat Model4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "nwHL1y1Eyssthrdi",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "Thanks for contacting ",
+        "message": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        660,
+        -360
+      ],
+      "id": "c83b48bf-3f36-4b28-8bc0-3ff5619328be",
+      "name": "Gmail2",
+      "webhookId": "31b67289-7d47-422b-a123-ce9943ea697c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m2znOemsg1mgMMuH",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain1": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain3": {
+      "main": [
+        [
+          {
+            "node": "Gmail2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0eaec688-ff1e-4a2e-bf2b-23d6596e22eb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a2d7f160e5083c7d135c088a00a4dd2fd6799272b651ddee67ff152d94827035"
+  },
+  "id": "BGMNPGcmb5oCuodx",
+  "tags": [
+    {
+      "createdAt": "2025-06-02T13:04:47.595Z",
+      "updatedAt": "2025-06-02T13:04:47.595Z",
+      "id": "zMw0FfusWET1TiFZ",
+      "name": "gmail"
+    }
+  ]
+}
