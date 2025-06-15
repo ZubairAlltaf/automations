@@ -1,7 +1,3 @@
-
----
-
-```markdown
 # 📧 AI-Powered Email Assistant using n8n + Gemini (or any LLM)
 
 ![n8n](https://img.shields.io/badge/Built%20with-n8n-orange?logo=n8n&logoColor=white)
@@ -10,7 +6,7 @@
 ![No Code](https://img.shields.io/badge/No%20Code-Low%20Code-green)
 ![Automation](https://img.shields.io/badge/Category-Email%20Automation-lightgrey)
 
-A smart and **completely customizable AI-based Email Assistant** built with [n8n](https://n8n.io). This automation reads your emails, categorizes them using an LLM (Gemini or any you choose), analyzes the intent, and drafts or sends personalized replies — all with just one click setup!
+A smart and **completely customizable AI-based Email Assistant** built with [n8n](https://n8n.io). This automation reads your emails, categorizes them using an LLM (Gemini or any you choose), analyzes the intent, and drafts or sends personalized replies — all with just one-click setup!
 
 ---
 
@@ -27,14 +23,12 @@ A smart and **completely customizable AI-based Email Assistant** built with [n8n
 
 ## 📁 Folder Structure
 
-email-assistant-automation/
-├── workflow.json              # Exported n8n workflow file
-├── README.md                  # This documentation file
-├── screenshots/               # (Optional) Screenshots of your n8n flow
-│   └── flow.png               # Sample image file of your automation
-├── assets/                    # (Optional) Prompts, icons, or supporting assets
-│   └── example-prompt.txt     # Sample AI prompt file (if used)
-└── logs/                      # (Optional) Logs or test output files
+```plaintext
+/email-assistant-automation/
+├── workflow.json               # Your exported n8n workflow file
+├── README.md                   # This documentation file
+├── screenshots/                # Add screenshots of your n8n flow here
+└── assets/                     # Optional: icons, prompts, config
 
 ```
 
