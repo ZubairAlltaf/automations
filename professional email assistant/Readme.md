@@ -27,14 +27,14 @@ A smart and **completely customizable AI-based Email Assistant** built with [n8n
 
 ## 📁 Folder Structure
 
-```
-
-/email-assistant-automation/
-│
-├── workflow\.json                 # Your exported n8n workflow file
-├── README.md                     # This documentation file
-├── screenshots/                  # Add screenshots of your n8n flow here
-└── assets/                       # Optional: icons, prompts, config
+email-assistant-automation/
+├── workflow.json              # Exported n8n workflow file
+├── README.md                  # This documentation file
+├── screenshots/               # (Optional) Screenshots of your n8n flow
+│   └── flow.png               # Sample image file of your automation
+├── assets/                    # (Optional) Prompts, icons, or supporting assets
+│   └── example-prompt.txt     # Sample AI prompt file (if used)
+└── logs/                      # (Optional) Logs or test output files
 
 ```
 
